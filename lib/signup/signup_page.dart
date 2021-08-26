@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/signup_model.dart';
+import 'package:hobby/signup/signup_model.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -7,12 +7,20 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final mailController = TextEditingController();
     final passwordController = TextEditingController();
+    final nameController = TextEditingController();
 
     return ChangeNotifierProvider<SignUpModel>(
       create: (_) => SignUpModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('サインアップ'),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          backgroundColor: Colors.white,
+          title: Text(
+            'サインアップ',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         body: Consumer<SignUpModel>(
           builder: (context, model, child) {
@@ -37,6 +45,15 @@ class SignUpPage extends StatelessWidget {
                     controller: passwordController,
                     onChanged: (text) {
                       model.password = text;
+                    },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: '名前',
+                    ),
+                    controller: nameController,
+                    onChanged: (text) {
+                      model.name = text;
                     },
                   ),
                   TextButton(

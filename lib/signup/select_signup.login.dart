@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/signup_page.dart';
+import 'package:hobby/login/login_page.dart';
+import 'package:hobby/signup/signup_page.dart';
 
 class SignUp extends StatelessWidget {
   @override
-  final mailController = TextEditingController();
-  final passwordController = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           '新規画面登録',
-          style: TextStyle(
-            color: Colors.black,
-          ),
+          style: TextStyle(color: Colors.black),
         ),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -40,7 +39,7 @@ class SignUp extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignUpPage(),
+                        builder: (context) => LoginPage(),
                       ));
                 })
           ],

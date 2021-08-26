@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class SignUpModel extends ChangeNotifier {
   String mail = '';
   String password = '';
+  String name = '';
 
   final FirebaseAuth auth = FirebaseAuth.instance;
-
   Future signUp() async {
     if (mail.isEmpty) {
       throw ('メールアドレスを入力してください');
@@ -17,19 +17,21 @@ class SignUpModel extends ChangeNotifier {
       throw ('パスワードを入力してください');
     }
 
-    // todo
+    if (name.isEmpty) {
+      throw ('名前を入力してください');
+    }
+
     final user = (await auth.createUserWithEmailAndPassword(
       email: mail,
       password: password,
     ))
         .user;
-    final email = user!.email;
+    final uid = user!.uid;
 
-    FirebaseFirestore.instance.collection('users').add(
-      {
-        'email': email,
-        'createdAt': Timestamp.now(),
-      },
-    );
+    FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'email': mail,
+      'createdAt': Timestamp.now(),
+      'name': name,
+    });
   }
 }
