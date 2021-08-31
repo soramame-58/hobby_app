@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
         return AlertDialog(
           title: Text(title),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
