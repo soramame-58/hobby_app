@@ -9,7 +9,7 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  // Fileの＿imagesにnullが入ってくる場合があり、
+  // Fileの＿imagesにnullが入ってくる場合がある。
   File? _image;
   final picker = ImagePicker();
 
@@ -29,7 +29,6 @@ class _CameraPageState extends State<CameraPage> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      //強制的アンラップによってオプショナル型の変数の中にどんな値が入っていても関係なく取り出す
       _image = File(pickedFile!.path);
     });
   }
@@ -52,18 +51,19 @@ class _CameraPageState extends State<CameraPage> {
                     child: _image == null
                         ? Text('No image selected.')
                         : Image.file(_image!)),
-                //強制的アンラップによってオプショナル型の変数の中にどんな値が入っていても関係なく取り出す
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FloatingActionButton(
+                  heroTag: Text("btn1"),
                   onPressed: getImageFromCamera,
                   tooltip: 'Pick Image From Camera',
                   child: Icon(Icons.add_a_photo),
                 ),
                 FloatingActionButton(
+                  heroTag: Text("btn2"),
                   onPressed: getImageFromGallery,
                   tooltip: 'Pick Image From Gallery',
                   child: Icon(Icons.photo_library),

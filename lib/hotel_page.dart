@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 
-class HotelPage extends StatelessWidget {
+class HotelPage extends StatefulWidget {
+  @override
+  _CarPageState createState() => _CarPageState();
+}
+
+class _CarPageState extends State<HotelPage> {
+  List<bool> _selections = List.generate(2, (_) => false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,15 +43,28 @@ class HotelPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: TextButton(
-            child: Text(
-              "他の人の投稿を見る",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            onPressed: () {}),
+      body: ListView(
+        children: <Widget>[
+          Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
+              child: ToggleButtons(
+                children: <Widget>[
+                  Icon(Icons.favorite),
+                  Icon(Icons.wc),
+                ],
+                isSelected: _selections,
+                color: Colors.grey,
+                selectedColor: Colors.white,
+                fillColor: Colors.green,
+                onPressed: (int index) {
+                  setState(() {
+                    _selections[index] = !_selections[index];
+                  });
+                },
+              )),
+        ],
       ),
     );
   }
