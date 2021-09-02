@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import '../home_page.dart';
-import '../setting_page.dart';
+import '../home/home_page.dart';
+import '../setting/setting_page.dart';
 
 bool isEmpty(String string) => string.length == 0;
 void main() async {

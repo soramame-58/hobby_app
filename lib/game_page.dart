@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/camera_page.dart';
-import 'package:hobby/chat_page.dart';
+import 'package:hobby/camera/camera_page.dart';
+import 'package:hobby/chat/chat_page.dart';
 
-class InformPage extends StatelessWidget {
+class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          '衣服',
+          'ゲーム',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -18,11 +18,11 @@ class InformPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.camera_alt_outlined),
             onPressed: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => CameraPage(),
-              //     ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CameraPage(),
+                  ));
             },
           ),
           IconButton(

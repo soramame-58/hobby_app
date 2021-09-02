@@ -42,10 +42,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>This app requires to add file to your camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>This app requires to access your photo library</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>This app requires to add file to your photo library your microphone</string>
 </dict>
 </plist>
