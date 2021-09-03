@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 
-import '../camera_model.dart';
-
 class FashionPage extends StatefulWidget {
   @override
   _CarPageState createState() => _CarPageState();

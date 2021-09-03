@@ -51,12 +51,6 @@ class CameraPage extends StatelessWidget {
                             Navigator.of(context).pop(true);
                           } catch (e) {
                             print(e);
-                            final snackBar = SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(e.toString()),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
                           } finally {
                             model.endLoading();
                           }

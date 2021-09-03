@@ -12,7 +12,12 @@ import '../music/music_page.dart';
 import '../outdoor/outdoor_page.dart';
 import '../spa/spa_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   List<String> imageUrl = [
     'http://livedoor.blogimg.jp/gyu2/imgs/f/4/f4f2f802.jpg',
     'https://i.pinimg.com/originals/d2/dd/31/d2dd3184d2b0934a0e4286d27ad0f622.jpg',
