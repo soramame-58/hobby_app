@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 
+import '../camera_model.dart';
+
 class FashionPage extends StatefulWidget {
   @override
   _CarPageState createState() => _CarPageState();
@@ -13,6 +15,10 @@ class _CarPageState extends State<FashionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
           '衣服',
@@ -46,24 +52,34 @@ class _CarPageState extends State<FashionPage> {
       body: ListView(
         children: <Widget>[
           Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(20),
-              child: ToggleButtons(
-                children: <Widget>[
-                  Icon(Icons.favorite),
-                  Icon(Icons.wc),
-                ],
-                isSelected: _selections,
-                color: Colors.grey,
-                selectedColor: Colors.white,
-                fillColor: Colors.green,
-                onPressed: (int index) {
-                  setState(() {
-                    _selections[index] = !_selections[index];
-                  });
-                },
-              )),
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ToggleButtons(
+                  children: <Widget>[
+                    Icon(Icons.favorite),
+                    Icon(Icons.wc),
+                  ],
+                  isSelected: _selections,
+                  color: Colors.grey,
+                  selectedColor: Colors.white,
+                  fillColor: Colors.green,
+                  onPressed: (int index) {
+                    setState(() {
+                      _selections[index] = !_selections[index];
+                    });
+                  },
+                )),
+          ),
+          Center(
+              child: TextButton(
+            child: Text(
+              '前のページに戻るよ',
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ))
         ],
       ),
     );

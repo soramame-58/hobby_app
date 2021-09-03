@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/cook_page.dart';
-import '../bike_page.dart';
-import '../book_page.dart';
-import '../car_page.dart';
-import '../cosmetics_page.dart';
-import '../fashion_page.dart';
-import '../game_page.dart';
-import '../hotel_page.dart';
-import '../movie_page.dart';
-import '../music_page.dart';
-import '../outdoor_page.dart';
-import '../spa_page.dart';
+import 'package:hobby/cook/cook_page.dart';
+import '../bike/bike_page.dart';
+import '../book/book_page.dart';
+import '../car/car_page.dart';
+import '../cosume/cosmetics_page.dart';
+import '../fashion/fashion_page.dart';
+import '../game/game_page.dart';
+import '../hotel/hotel_page.dart';
+import '../movie/movie_page.dart';
+import '../music/music_page.dart';
+import '../outdoor/outdoor_page.dart';
+import '../spa/spa_page.dart';
 
 class HomePage extends StatelessWidget {
   List<String> imageUrl = [
@@ -49,6 +49,7 @@ class HomePage extends StatelessWidget {
       theme: ThemeData(primaryColor: Colors.white),
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           title: Text(
             '好きなもの紹介',
             style: TextStyle(

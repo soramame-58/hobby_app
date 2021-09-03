@@ -13,7 +13,16 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("お話"),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          backgroundColor: Colors.white,
+          title: Text(
+            "お話",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           centerTitle: true,
           actions: [
             IconButton(
