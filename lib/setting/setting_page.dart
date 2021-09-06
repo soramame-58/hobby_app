@@ -17,12 +17,12 @@ class SettingPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.accessibility),
+            leading: Icon(Icons.wc),
             title: Text("魅力的な人達"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.ac_unit),
+            leading: Icon(Icons.favorite),
             title: Text("気になった投稿"),
             onTap: () {},
           ),
@@ -32,17 +32,17 @@ class SettingPage extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.wc),
+            leading: Icon(Icons.accessibility_new),
             title: Text("紹介"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.accessibility_new),
+            leading: Icon(Icons.attach_email),
             title: Text("ご意見、ご要望"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.add_to_drive),
+            leading: Icon(Icons.app_settings_alt),
             title: Text("環境設定"),
             onTap: () {},
           ),
