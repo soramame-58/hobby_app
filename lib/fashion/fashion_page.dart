@@ -8,7 +8,8 @@ class FashionPage extends StatefulWidget {
 }
 
 class _CarPageState extends State<FashionPage> {
-  List<bool> _selections = List.generate(2, (_) => false);
+  final _controller = TextEditingController();
+  List<bool> _selections = List.generate(2, (index) => false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +28,7 @@ class _CarPageState extends State<FashionPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.camera_alt_outlined),
+            tooltip: '画像を投稿する',
             onPressed: () {
               Navigator.push(
                   context,
@@ -37,11 +39,12 @@ class _CarPageState extends State<FashionPage> {
           ),
           IconButton(
             icon: Icon(Icons.chat_bubble_outline),
+            tooltip: '好きを共有する',
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ChatPage(),
+                    builder: (context) => ChatPage(_controller.text),
                   ));
             },
           ),
@@ -63,12 +66,11 @@ class _CarPageState extends State<FashionPage> {
                     fillColor: Colors.green,
                     onPressed: (int index) {
                       setState(() {
-                        if (index == 0) {
-                          _selections[index] = !_selections[index];
+                        if (index == 0 && _selections == true) {
                           print('ハート');
                           favorite_showDialog(context, '気になった投稿に追加しました');
                         } else if (index == 1) {
-                          _selections[index] = !_selections[index];
+                          _selections[index] = true;
                           print('友達');
                           wc_showDialog(context, '魅力的な人に追加しました');
                         }
@@ -104,7 +106,12 @@ class _CarPageState extends State<FashionPage> {
           title: Text(title),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -126,7 +133,12 @@ class _CarPageState extends State<FashionPage> {
           title: Text(title),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

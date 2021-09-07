@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hobby/attractive/attractive_page.dart';
+
+import '../curious/curious_page.dart';
 
 class SettingPage extends StatelessWidget {
   @override
@@ -19,12 +22,24 @@ class SettingPage extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.wc),
             title: Text("魅力的な人達"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AttractivePage(),
+                  ));
+            },
           ),
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text("気になった投稿"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CuriousPage(),
+                  ));
+            },
           ),
           ListTile(
             leading: Icon(Icons.access_alarm_outlined),

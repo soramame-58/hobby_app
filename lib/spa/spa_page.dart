@@ -8,6 +8,7 @@ class SpaPage extends StatefulWidget {
 }
 
 class _CarPageState extends State<SpaPage> {
+  final _controller = TextEditingController();
   List<bool> _selections = List.generate(2, (_) => false);
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _CarPageState extends State<SpaPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ChatPage(),
+                    builder: (context) => ChatPage(_controller.text),
                   ));
             },
           ),

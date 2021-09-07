@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hobby/cook/cook_page.dart';
+import 'package:hobby/cosume/cosmetics_page.dart';
 import '../bike/bike_page.dart';
 import '../book/book_page.dart';
 import '../car/car_page.dart';
-import '../cosume/cosmetics_page.dart';
 import '../fashion/fashion_page.dart';
 import '../game/game_page.dart';
 import '../hotel/hotel_page.dart';

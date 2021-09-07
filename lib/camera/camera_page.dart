@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/camera_model.dart';
+import 'package:hobby/camera/camera_model.dart';
 import 'package:provider/provider.dart';
 
 class CameraPage extends StatelessWidget {
@@ -30,12 +30,15 @@ class CameraPage extends StatelessWidget {
                     children: [
                       InkWell(
                         child: SizedBox(
-                          width: 100,
-                          height: 100,
                           child: model.imageFile != null
                               ? Image.file(model.imageFile!)
                               : Container(
-                                  color: Colors.grey,
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
                         ),
                         onTap: () async {
