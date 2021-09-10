@@ -33,8 +33,10 @@ class _ChatPageState extends State<ChatPage> {
           margin: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: <Widget>[
+              //firestoreからのデータを取得する作業
               Flexible(
                 child: StreamBuilder<QuerySnapshot>(
+                  //Firestoreのstreamにdocumentのsnapshots()を取得。documentに更新があったときにリアルタイムで画面の描画を更新
                   stream: FirebaseFirestore.instance
                       .collection("chat_room")
                       .orderBy("created_at", descending: true)
@@ -62,6 +64,7 @@ class _ChatPageState extends State<ChatPage> {
                   },
                 ),
               ),
+
               Divider(height: 1.0),
               Container(
                 margin: EdgeInsets.only(bottom: 20.0, right: 10.0, left: 10.0),
@@ -130,6 +133,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  //firestoreにデータを送信する作業
   _handleSubmit(String message) {
     _controller.text = "";
     var db = FirebaseFirestore.instance;

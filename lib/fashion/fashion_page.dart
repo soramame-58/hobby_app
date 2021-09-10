@@ -55,29 +55,33 @@ class _CarPageState extends State<FashionPage> {
           Container(
             child: Align(
                 alignment: Alignment.bottomCenter,
-                child: InkWell(
-                  child: ToggleButtons(
-                    children: <Widget>[
-                      Icon(Icons.favorite),
-                      Icon(Icons.wc),
-                    ],
-                    color: Colors.grey,
-                    selectedColor: Colors.white,
-                    fillColor: Colors.green,
-                    onPressed: (int index) {
-                      setState(() {
-                        if (index == 0 && _selections == true) {
-                          print('ハート');
+                child: ToggleButtons(
+                  children: <Widget>[
+                    Icon(Icons.favorite),
+                    Icon(Icons.wc),
+                  ],
+                  color: Colors.grey,
+                  selectedColor: Colors.white,
+                  fillColor: Colors.green,
+                  onPressed: (int index) {
+                    setState(() {
+                      if (index == 0) {
+                        _selections[index] = !_selections[index];
+                        print('ハート');
+                        if (_selections[index]) {
                           favorite_showDialog(context, '気になった投稿に追加しました');
-                        } else if (index == 1) {
-                          _selections[index] = true;
-                          print('友達');
+                        }
+                      } else if (index == 1) {
+                        _selections[index] = !_selections[index];
+                        print('友達');
+                        if (_selections[index]) {
                           wc_showDialog(context, '魅力的な人に追加しました');
                         }
-                      });
-                    },
-                    isSelected: _selections,
-                  ),
+                      }
+                    });
+                  },
+                  //どのボタンが選択されたかコントロールする
+                  isSelected: _selections,
                 )),
           ),
           Center(
