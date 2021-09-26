@@ -43,7 +43,7 @@ class CuriousPage extends StatelessWidget {
                 leading: const Icon(Icons.face_outlined),
                 title: Text('$index'),
                 subtitle: Text(''),
-                onTap: () {/* react to the tile being tapped */},
+                onTap: () {},
               ));
         },
         itemCount: listItem.length,

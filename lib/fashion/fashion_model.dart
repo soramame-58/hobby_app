@@ -96,7 +96,10 @@ class FashionModel extends ChangeNotifier {
           actions: <Widget>[
             // ボタン領域
             TextButton(
-              child: Text("OK"),
+              child: Text(
+                "閉じる",
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/cosumetics_model.dart';
+import 'package:hobby/cosume/cosumetics_model.dart';
 import 'package:provider/provider.dart';
 
 class CosmeticsPage extends StatefulWidget {
@@ -46,18 +46,20 @@ class CosmeticsPageState extends State<CosmeticsPage> {
                     selectedColor: Colors.white,
                     fillColor: Colors.green,
                     onPressed: (int index) {
-                      if (index == 0) {
-                        _selections[index] = !_selections[index];
-                        if (_selections[index]) {
-                          model.favorite_showDialog(context, '魅力的な人に追加しました');
+                      setState(() {
+                        if (index == 0) {
+                          _selections[index] = !_selections[index];
+                          if (_selections[index]) {
+                            model.favorite_showDialog(context, '魅力的な人に追加しました');
+                          }
+                        } else if (index == 1) {
+                          _selections[index] = !_selections[index];
+                          if (_selections[index]) {
+                            model.wc_showDialog(context, '気になった投稿に追加しました');
+                          }
                         }
-                      } else if (index == 1) {
-                        _selections[index] = !_selections[index];
-                        if (_selections[index]) {
-                          model.wc_showDialog(context, '気になった投稿に追加しました');
-                        }
-                      }
-                      ;
+                        ;
+                      });
                     },
                     isSelected: _selections,
                   )),
