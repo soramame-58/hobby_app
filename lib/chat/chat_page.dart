@@ -141,6 +141,7 @@ class _ChatPageState extends State<ChatPage> {
       "user_name": widget._userName,
       "message": message,
       "created_at": DateTime.now()
+      //then関数の引数として与えたコールバック関数は、時間が掛かる関数の値処理が終わった際に実行
     }).then((val) {
       print("成功です");
     }).catchError((err) {

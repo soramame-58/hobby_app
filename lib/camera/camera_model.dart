@@ -6,7 +6,9 @@ import 'package:image_picker/image_picker.dart';
 
 class CameraModel extends ChangeNotifier {
   File? imageFile;
+  String? title;
   bool isLoading = false;
+  String? imgURL;
 
   final picker = ImagePicker();
 
@@ -21,9 +23,11 @@ class CameraModel extends ChangeNotifier {
   }
 
   Future addHobbyImage() async {
-    final doc = FirebaseFirestore.instance.collection('hobby').doc();
+    if (title == null || title == "") {
+      throw 'タイトルが入力されていません';
+    }
 
-    String? imgURL;
+    final doc = FirebaseFirestore.instance.collection('hobby').doc();
     if (imageFile != null) {
       // storageにアップロード
       final task = await FirebaseStorage.instance
@@ -34,6 +38,7 @@ class CameraModel extends ChangeNotifier {
 
     // firestoreに追加
     await doc.set({
+      'title': title,
       'imgURL': imgURL,
     });
   }

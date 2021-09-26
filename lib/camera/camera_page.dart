@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_model.dart';
+import 'package:hobby/fashion/fashion_page.dart';
 import 'package:provider/provider.dart';
 
 class CameraPage extends StatelessWidget {
+  final titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CameraModel>(
@@ -20,7 +22,7 @@ class CameraPage extends StatelessWidget {
             ),
           ),
         ),
-        body: Center(
+        body: SingleChildScrollView(
           child: Consumer<CameraModel>(builder: (context, model, child) {
             return Stack(
               children: [
@@ -46,14 +48,28 @@ class CameraPage extends StatelessWidget {
                           await model.pickImage();
                         },
                       ),
+                      TextField(
+                          decoration: InputDecoration(
+                            hintText: '画像のタイトル',
+                          ),
+                          controller: titleController,
+                          onChanged: (text) {
+                            model.title = text;
+                          }),
                       TextButton(
                         onPressed: () async {
                           // 追加の処理
                           try {
                             model.startLoading();
-                            Navigator.of(context).pop(true);
+                            await model.addHobbyImage();
+                            Navigator.of(context).pop(FashionPage());
                           } catch (e) {
-                            print(e);
+                            final snackBar = SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(e.toString()),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           } finally {
                             model.endLoading();
                           }
