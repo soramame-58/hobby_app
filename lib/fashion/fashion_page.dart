@@ -107,47 +107,50 @@ class _FashionPageState extends State<FashionPage> {
                       isSelected: _selections,
                     );
                   }),
+                  Text('名前'),
                   Icon(Icons.arrow_forward),
                 ],
               ),
             ),
-            Consumer<FashionModel>(builder: (context, model, child) {
-              final List<Hobby>? hobbys = model.hobbys;
+            Expanded(
+              child: Consumer<FashionModel>(builder: (context, model, child) {
+                final List<Hobby>? hobbys = model.hobbys;
 
-              if (hobbys == null) {
-                return CircularProgressIndicator();
-              }
+                if (hobbys == null) {
+                  return CircularProgressIndicator();
+                }
 
-              return GridView.builder(
-                itemCount: hobbys.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemBuilder: (context, index) {
-                  final hobby = hobbys[index];
-                  return InkWell(
-                    child: Container(
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Column(
-                          children: [
-                            Text(
-                              hobby.title ?? 'タイトルなし',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                return GridView.builder(
+                  itemCount: hobbys.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    final hobby = hobbys[index];
+                    return InkWell(
+                      child: Container(
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Column(
+                            children: [
+                              Text(
+                                hobby.title ?? 'タイトルなし',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            if (hobby.imgURL != null)
-                              Expanded(child: Image.network(hobby.imgURL!))
-                          ],
+                              if (hobby.imgURL != null)
+                                Expanded(child: Image.network(hobby.imgURL!))
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            }),
+                    );
+                  },
+                );
+              }),
+            ),
           ],
         ),
       ),
