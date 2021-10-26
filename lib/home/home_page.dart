@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobby/cook/cook_page.dart';
 import 'package:hobby/cosume/cosmetics_page.dart';
+import 'package:hobby/login/login_page.dart';
+import 'package:hobby/myprofile/myprofile_page.dart';
+import 'package:hobby/signup/signup_page.dart';
 import '../bike/bike_page.dart';
 import '../book/book_page.dart';
 import '../car/car_page.dart';
@@ -25,8 +29,8 @@ class _HomePageState extends State<HomePage> {
     'https://picture.goobike.com/850/8503292/SG7/8503292B3020072500200.jpg',
     'https://p0.pikist.com/photos/946/383/car-old-vintage-renault-renault-8-green-retro.jpg',
     'https://cdn.mainichi.jp/vol1/2021/04/18/20210418ddlk28040365000p/9.jpg?1',
-    'https://i.pinimg.com/736x/f0/f2/9a/f0f29aca0fb61b1869fbc7f25bb43ee6.jpg',
-    'https://livedoor.blogimg.jp/karapaia_zaeega/imgs/6/e/6e437928.jpg',
+    'https://capa.getnavi.jp/wps/wp-content/uploads/2020/10/201012jcii02.jpg',
+    'https://grapee.jp/wp-content/uploads/23510_pos_09.jpg',
     'http://rooftop.cc/news/assets_c/2015/09/ARTKT-008_fix-thumb-450x450-47952.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDdZ29z6I9azNn5gjFyLtJQZkBeEyc6E6Vjg&usqp=CAU',
     'https://waha.sixcore.jp/waha-illust/640wm/vol.15/15-0710b.jpg',
@@ -54,13 +58,49 @@ class _HomePageState extends State<HomePage> {
       theme: ThemeData(primaryColor: Colors.white),
       home: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
           backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+                icon: Icon(Icons.person_sharp),
+                tooltip: 'ログインする',
+                onPressed: () async {
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    print('ログインしている');
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyPage(),
+                        ));
+                  } else {
+                    print('ログインしていない');
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ));
+                  }
+                }),
+          ],
+          leading: IconButton(
+              icon: Icon(Icons.switch_account),
+              tooltip: '新規登録する',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignUpPage(),
+                    ));
+              }),
           title: Text(
             '好きなもの紹介',
             style: TextStyle(
               color: Colors.black,
             ),
           ),
+          centerTitle: true,
         ),
         body: GridView.builder(
           itemCount: 12,

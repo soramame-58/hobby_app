@@ -24,6 +24,9 @@ dependencies:
   flutter_slidable: ^0.6.0
   multi_image_picker2: ^5.0.2
   english_words: ^4.0.0
+  share: ^2.0.4
+  webview_flutter: ^2.1.1
+  firebase_messaging: ^10.0.8
 
 dev_dependencies:
   flutter_test:

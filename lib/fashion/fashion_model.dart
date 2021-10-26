@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../hobby.dart';
+import 'hobby.dart';
 
 class FashionModel extends ChangeNotifier {
+  String? name;
   List<Hobby>? hobbys;
-
   void fetchFashionList() async {
     final QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('hobby').get();
@@ -19,6 +20,38 @@ class FashionModel extends ChangeNotifier {
     }).toList();
 
     this.hobbys = hobbys;
+    notifyListeners();
+  }
+
+  void fetchName() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final data = snapshot.data();
+    this.name = data?['name'];
+
+    notifyListeners();
+  }
+
+  void getHobbySubcollection() {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance
+        .collectionGroup('hobby')
+        .where('hobby', isEqualTo: uid)
+        .orderBy('createdAt')
+        .get();
+
+    notifyListeners();
+  }
+
+  void getChatSubcollection() {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance
+        .collectionGroup('chat')
+        .where('chat', isEqualTo: uid)
+        .orderBy('createdAt')
+        .get();
+
     notifyListeners();
   }
 

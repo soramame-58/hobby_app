@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../hobby.dart';
+import '../fashion/hobby.dart';
 
 class EditHobbyModel extends ChangeNotifier {
   final Hobby hobby;

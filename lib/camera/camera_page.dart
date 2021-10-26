@@ -87,8 +87,12 @@ class CameraPage extends StatelessWidget {
                 if (model.isLoading)
                   Container(
                     color: Colors.black54,
-                    child: Center(
-                      child: CircularProgressIndicator(),
+                    child: SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
                   ),
               ],

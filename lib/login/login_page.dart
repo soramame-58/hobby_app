@@ -73,7 +73,12 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   TextButton(
-                    child: Text('ログインする'),
+                    child: Text(
+                      'ログインする',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                     onPressed: () async {
                       try {
                         await model.login();
@@ -103,7 +108,12 @@ class _LoginPageState extends State<LoginPage> {
           title: Text(title),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

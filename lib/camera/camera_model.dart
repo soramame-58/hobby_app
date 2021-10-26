@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,7 +28,8 @@ class CameraModel extends ChangeNotifier {
       throw 'タイトルが入力されていません';
     }
 
-    final doc = FirebaseFirestore.instance.collection('hobby').doc();
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final doc = FirebaseFirestore.instance.collection('hobby').doc(uid);
     if (imageFile != null) {
       // storageにアップロード
       final task = await FirebaseStorage.instance
@@ -40,6 +42,15 @@ class CameraModel extends ChangeNotifier {
     await doc.set({
       'title': title,
       'imgURL': imgURL,
+    }).then((value) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(uid)
+          .collection("hobby")
+          .add({
+        "imgURL": imgURL,
+        "title": title,
+      });
     });
   }
 

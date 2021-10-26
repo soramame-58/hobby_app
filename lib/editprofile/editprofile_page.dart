@@ -1,38 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/edit/edit_model.dart';
+import 'package:hobby/editprofile/editprofile_model.dart';
 import 'package:provider/provider.dart';
 
-import '../fashion/hobby.dart';
-
-class EditHobbyPage extends StatelessWidget {
-  final Hobby hobby;
-  EditHobbyPage(this.hobby);
-
+class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<EditHobbyModel>(
-      create: (_) => EditHobbyModel(hobby),
+    return ChangeNotifierProvider<EditProfileModel>(
+      create: (_) => EditProfileModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('編集'),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          backgroundColor: Colors.white,
+          title: Text(
+            'プロフィール編集',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
         ),
         body: Center(
-          child: Consumer<EditHobbyModel>(builder: (context, model, child) {
+          child: Consumer<EditProfileModel>(builder: (context, model, child) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   TextField(
-                    controller: model.titleController,
+                    controller: model.nameController,
                     decoration: InputDecoration(
-                      hintText: 'タイトル',
+                      hintText: '名前',
                     ),
                     onChanged: (text) {
-                      model.setTitle(text);
+                      model.setName(text);
                     },
                   ),
                   SizedBox(
                     height: 8,
+                  ),
+                  TextField(
+                    controller: model.descriptionController,
+                    decoration: InputDecoration(
+                      hintText: '自己紹介',
+                    ),
+                    onChanged: (text) {
+                      model.setDescription(text);
+                    },
+                  ),
+                  SizedBox(
+                    height: 16,
                   ),
                   ElevatedButton(
                     onPressed: model.isUpdated()
@@ -40,7 +56,7 @@ class EditHobbyPage extends StatelessWidget {
                             // 追加の処理
                             try {
                               await model.update();
-                              Navigator.of(context).pop(model.title);
+                              Navigator.of(context).pop();
                             } catch (e) {
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,

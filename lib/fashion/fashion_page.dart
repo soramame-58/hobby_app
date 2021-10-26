@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
-import 'package:hobby/hobby.dart';
+import 'package:hobby/fashion/hobby.dart';
 import 'package:provider/provider.dart';
 
 class FashionPage extends StatefulWidget {
@@ -12,14 +12,17 @@ class FashionPage extends StatefulWidget {
 
 class _FashionPageState extends State<FashionPage> {
   final _controller = TextEditingController();
-
   List<bool> _selections = List.generate(2, (_) => false);
 
   @override
   Widget build(BuildContext context) {
     //ChangeNotifierProviderは、変更された時にその変更を検知できる。
     return ChangeNotifierProvider<FashionModel>(
-      create: (_) => FashionModel()..fetchFashionList(),
+      create: (_) => FashionModel()
+        ..fetchFashionList()
+        ..fetchName()
+        ..getHobbySubcollection()
+        ..getChatSubcollection(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -48,17 +51,6 @@ class _FashionPageState extends State<FashionPage> {
                 },
               );
             }),
-            IconButton(
-              icon: Icon(Icons.chat_bubble_outline),
-              tooltip: '好きを共有する',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(_controller.text),
-                    ));
-              },
-            ),
             Consumer<FashionModel>(builder: (context, model, child) {
               return IconButton(
                 icon: Icon(Icons.face_outlined),
@@ -107,8 +99,43 @@ class _FashionPageState extends State<FashionPage> {
                       isSelected: _selections,
                     );
                   }),
-                  Text('名前'),
-                  Icon(Icons.arrow_forward),
+                  Consumer<FashionModel>(builder: (context, model, child) {
+                    return SizedBox(
+                      width: 90,
+                      child: Text(
+                        model.name ?? '名無し',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }),
+                  SizedBox(
+                    width: 25,
+                    child: IconButton(
+                      icon: Icon(Icons.chat_bubble_outline),
+                      tooltip: '好きを共有する',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatPage(_controller.text),
+                            ));
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 25,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_forward),
+                      tooltip: '次のページ',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatPage(_controller.text),
+                            ));
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -117,7 +144,11 @@ class _FashionPageState extends State<FashionPage> {
                 final List<Hobby>? hobbys = model.hobbys;
 
                 if (hobbys == null) {
-                  return CircularProgressIndicator();
+                  return SizedBox(
+                    child: CircularProgressIndicator(),
+                    height: 10.0,
+                    width: 10.0,
+                  );
                 }
 
                 return GridView.builder(
@@ -141,7 +172,7 @@ class _FashionPageState extends State<FashionPage> {
                                 ),
                               ),
                               if (hobby.imgURL != null)
-                                Expanded(child: Image.network(hobby.imgURL!))
+                                Expanded(child: Image.network(hobby.imgURL!)),
                             ],
                           ),
                         ),
