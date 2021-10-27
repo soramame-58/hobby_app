@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,24 +9,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String name = '名前';
-  Future<String> fetchName() async {
-    final QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('users').get();
-    String name = (snapshot.docs.first.data() as Map<String, dynamic>)['name'];
-    return name;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchName().then((String value) {
-      setState(() {
-        name = value;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final mailController = TextEditingController();
@@ -42,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           backgroundColor: Colors.white,
           title: Text(
-            name,
+            'ログイン画面',
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
@@ -72,55 +53,30 @@ class _LoginPageState extends State<LoginPage> {
                       model.password = text;
                     },
                   ),
-                  TextButton(
-                    child: Text(
-                      'ログインする',
-                      style: TextStyle(
-                        color: Colors.black,
+                  Consumer<LoginModel>(builder: (context, model, child) {
+                    return TextButton(
+                      child: Text(
+                        'ログインする',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    onPressed: () async {
-                      try {
-                        await model.login();
-                        _showDialog(context, 'ログインしました');
-                      } catch (e) {
-                        _showDialog(context, e.toString());
-                      }
-                    },
-                  ),
+                      onPressed: () async {
+                        try {
+                          await model.login();
+                          model.login_showDialog(context, 'ログインしました');
+                        } catch (e) {
+                          model.login_showDialog(context, e.toString());
+                        }
+                      },
+                    );
+                  }),
                 ],
               ),
             );
           },
         ),
       ),
-    );
-  }
-
-  Future _showDialog(
-    BuildContext context,
-    String title,
-  ) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'OK',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

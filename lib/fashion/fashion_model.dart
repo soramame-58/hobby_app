@@ -3,10 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'hobby.dart';
+import 'hobby_img.dart';
 
 class FashionModel extends ChangeNotifier {
   String? name;
   List<Hobby>? hobbys;
+  List<HobbyImg>? hobbyImg;
+
   void fetchFashionList() async {
     final QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('hobby').get();
@@ -33,23 +36,34 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getHobbySubcollection() {
+  void getHobbySubCollection() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance
-        .collectionGroup('hobby')
-        .where('hobby', isEqualTo: uid)
-        .orderBy('createdAt')
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('hobby')
         .get();
+
+    final List<HobbyImg> hobbyImg =
+        snapshot.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      final String id = document.id;
+      final String? title = data['title'];
+      final String? imgURL = data['imgURL'];
+      return HobbyImg(id, imgURL, title);
+    }).toList();
+
+    this.hobbyImg = hobbyImg;
 
     notifyListeners();
   }
 
-  void getChatSubcollection() {
+  void getChatSubCollection() {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance
         .collectionGroup('chat')
+        //where() を使って「条件を指定」したデータを取得
         .where('chat', isEqualTo: uid)
-        .orderBy('createdAt')
         .get();
 
     notifyListeners();

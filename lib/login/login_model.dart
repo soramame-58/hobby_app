@@ -27,18 +27,38 @@ class LoginModel extends ChangeNotifier {
     return signIn.user!.uid;
   }
 
-  Future<String> fetchName() async {
-    final QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('users').get();
-    String name = (snapshot.docs.first.data() as Map<String, dynamic>)['name'];
-    return name;
-  }
-
   Future<DocumentSnapshot> getUid() async {
     final firebaseUser = FirebaseAuth.instance.currentUser!;
     return await FirebaseFirestore.instance
         .collection('users')
         .doc(firebaseUser.uid)
         .get();
+  }
+
+  Future login_showDialog(
+    BuildContext context,
+    String title,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

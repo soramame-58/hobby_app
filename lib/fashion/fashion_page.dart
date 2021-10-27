@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
-import 'package:hobby/fashion/hobby.dart';
+import 'package:hobby/fashion/hobby_img.dart';
 import 'package:provider/provider.dart';
 
 class FashionPage extends StatefulWidget {
@@ -21,8 +21,8 @@ class _FashionPageState extends State<FashionPage> {
       create: (_) => FashionModel()
         ..fetchFashionList()
         ..fetchName()
-        ..getHobbySubcollection()
-        ..getChatSubcollection(),
+        ..getHobbySubCollection()
+        ..getChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -141,9 +141,9 @@ class _FashionPageState extends State<FashionPage> {
             ),
             Expanded(
               child: Consumer<FashionModel>(builder: (context, model, child) {
-                final List<Hobby>? hobbys = model.hobbys;
+                final List<HobbyImg>? hobbysImg = model.hobbyImg;
 
-                if (hobbys == null) {
+                if (hobbysImg == null) {
                   return SizedBox(
                     child: CircularProgressIndicator(),
                     height: 10.0,
@@ -152,12 +152,12 @@ class _FashionPageState extends State<FashionPage> {
                 }
 
                 return GridView.builder(
-                  itemCount: hobbys.length,
+                  itemCount: hobbysImg.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                   ),
                   itemBuilder: (context, index) {
-                    final hobby = hobbys[index];
+                    final hobbyImg = hobbysImg[index];
                     return InkWell(
                       child: Container(
                         child: AspectRatio(
@@ -165,14 +165,15 @@ class _FashionPageState extends State<FashionPage> {
                           child: Column(
                             children: [
                               Text(
-                                hobby.title ?? 'タイトルなし',
+                                hobbyImg.title ?? 'タイトルなし',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              if (hobby.imgURL != null)
-                                Expanded(child: Image.network(hobby.imgURL!)),
+                              if (hobbyImg.imgURL != null)
+                                Expanded(
+                                    child: Image.network(hobbyImg.imgURL!)),
                             ],
                           ),
                         ),
