@@ -22,9 +22,3 @@ class ChatModel extends ChangeNotifier {
         .delete();
   }
 }
-
-//     .then((val) {
-// print("成功です");
-// }).catchError((err) {
-// print(err);
-// });

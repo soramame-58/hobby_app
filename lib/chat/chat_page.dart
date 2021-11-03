@@ -38,7 +38,7 @@ class _ChatPageState extends State<ChatPage> {
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(
               children: <Widget>[
-                //firestoreからのデータを取得する作業
+                // データを取得して画面に表示する処理
                 Flexible(
                   child: StreamBuilder<QuerySnapshot>(
                     //Firestoreのstreamにdocumentのsnapshots()を取得。documentに更新があったときにリアルタイムで画面の描画を更新

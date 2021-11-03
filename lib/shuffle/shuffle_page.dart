@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
+import 'package:hobby/fashion/fashion_page.dart';
 import 'package:hobby/fashion/hobby_img.dart';
-import 'package:hobby/shuffle/shuffle_page.dart';
+import 'package:hobby/shuffle/shuffle_model.dart';
 import 'package:provider/provider.dart';
 
-class FashionPage extends StatefulWidget {
+class shufflePage extends StatefulWidget {
   @override
-  State<FashionPage> createState() => _FashionPageState();
+  shufflePageState createState() => shufflePageState();
 }
 
-class _FashionPageState extends State<FashionPage> {
+class shufflePageState extends State<shufflePage> {
   final _controller = TextEditingController();
   List<bool> _selections = List.generate(2, (_) => false);
 
+  List<String> userList = ["user1", "user2", "user3", "user4"];
+
   @override
   Widget build(BuildContext context) {
-    //ChangeNotifierProviderは、変更された時にその変更を検知できる。
     return ChangeNotifierProvider<FashionModel>(
       create: (_) => FashionModel()
         ..fetchFashionList()
@@ -64,7 +66,6 @@ class _FashionPageState extends State<FashionPage> {
             }),
           ],
         ),
-        //Consumerが変更を検知して、値の設定と作り直しを行う
         body: Column(
           children: [
             Padding(

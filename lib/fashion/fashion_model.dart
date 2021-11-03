@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hobby/chat/chat.dart';
 
 import 'hobby.dart';
 import 'hobby_img.dart';
@@ -9,6 +10,8 @@ class FashionModel extends ChangeNotifier {
   String? name;
   List<Hobby>? hobbys;
   List<HobbyImg>? hobbyImg;
+  List<Chat>? chats;
+  String? user;
 
   void fetchFashionList() async {
     final QuerySnapshot snapshot =
@@ -36,6 +39,16 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void getUsersName() async {
+    final QuerySnapshot result =
+        await FirebaseFirestore.instance.collection('users').get();
+    final List<DocumentSnapshot> documents = result.docs;
+
+    documents.shuffle();
+
+    notifyListeners();
+  }
+
   void getHobbySubCollection() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await FirebaseFirestore.instance
@@ -58,13 +71,23 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getChatSubCollection() {
+  void getChatSubCollection() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance
-        .collectionGroup('chat')
-        //where() を使って「条件を指定」したデータを取得
-        .where('chat', isEqualTo: uid)
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('chat')
         .get();
+
+    final List<Chat> chats = snapshot.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      final String id = document.id;
+      final String? message = data['message'];
+      final String? user_name = data['user_name'];
+      return Chat(id, message, user_name);
+    }).toList();
+
+    this.chats = chats;
 
     notifyListeners();
   }
