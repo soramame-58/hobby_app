@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobby/chat/chat.dart';
+import 'package:hobby/user.dart';
 
 import 'hobby.dart';
 import 'hobby_img.dart';
@@ -11,7 +12,6 @@ class FashionModel extends ChangeNotifier {
   List<Hobby>? hobbys;
   List<HobbyImg>? hobbyImg;
   List<Chat>? chats;
-  String? user;
 
   void fetchFashionList() async {
     final QuerySnapshot snapshot =
@@ -39,14 +39,19 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getUsersName() async {
-    final QuerySnapshot result =
+  Future<UserDate> getRandomUser() async {
+    final QuerySnapshot result = //QuerySnapshotをとってくる
         await FirebaseFirestore.instance.collection('users').get();
+    //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
     final List<DocumentSnapshot> documents = result.docs;
 
+    //それをシャッフル
     documents.shuffle();
-
-    notifyListeners();
+    //シャッフルした中の一つのデータをしとくする
+    Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
+    final String id = documents.first.id;
+    final String? name = data['name'];
+    return UserDate(id, name);
   }
 
   void getHobbySubCollection() async {

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
-import 'package:hobby/fashion/fashion_page.dart';
 import 'package:hobby/fashion/hobby_img.dart';
-import 'package:hobby/shuffle/shuffle_model.dart';
+import 'package:hobby/user.dart';
 import 'package:provider/provider.dart';
 
 class shufflePage extends StatefulWidget {
+  //
+  final UserDate userDate;
+  const shufflePage({Key? key, required this.userDate}) : super(key: key);
   @override
   shufflePageState createState() => shufflePageState();
 }
@@ -16,8 +18,6 @@ class shufflePageState extends State<shufflePage> {
   final _controller = TextEditingController();
   List<bool> _selections = List.generate(2, (_) => false);
 
-  List<String> userList = ["user1", "user2", "user3", "user4"];
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FashionModel>(
@@ -25,8 +25,7 @@ class shufflePageState extends State<shufflePage> {
         ..fetchFashionList()
         ..fetchName()
         ..getHobbySubCollection()
-        ..getChatSubCollection()
-        ..getUsersName(),
+        ..getChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -106,7 +105,7 @@ class shufflePageState extends State<shufflePage> {
                     return SizedBox(
                       width: 90,
                       child: Text(
-                        model.name ?? '名無し',
+                        widget.userDate.name!,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     );
@@ -132,12 +131,14 @@ class shufflePageState extends State<shufflePage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
+                          final userDate = await model.getRandomUser();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => shufflePage(),
+                                builder: (context) => shufflePage(
+                                  userDate: userDate,
+                                ),
                               ));
-                          model.getUsersName();
                         },
                       ),
                     );

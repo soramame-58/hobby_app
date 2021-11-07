@@ -3,6 +3,7 @@ import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';
+import 'package:hobby/myprofile/myprofile_page.dart';
 import 'package:hobby/shuffle/shuffle_page.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +24,7 @@ class _FashionPageState extends State<FashionPage> {
         ..fetchFashionList()
         ..fetchName()
         ..getHobbySubCollection()
-        ..getChatSubCollection()
-        ..getUsersName(),
+        ..getChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -102,11 +102,24 @@ class _FashionPageState extends State<FashionPage> {
                     );
                   }),
                   Consumer<FashionModel>(builder: (context, model, child) {
-                    return SizedBox(
-                      width: 90,
-                      child: Text(
-                        model.name ?? '名無し',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    return TextButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyPage(),
+                            ));
+                      },
+                      child: SizedBox(
+                        width: 90,
+                        child: Text(
+                          model.name ?? '名無し',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
                       ),
                     );
                   }),
@@ -131,12 +144,14 @@ class _FashionPageState extends State<FashionPage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
+                          final userDate = await model.getRandomUser();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => shufflePage(),
+                                builder: (context) => shufflePage(
+                                  userDate: userDate,
+                                ),
                               ));
-                          model.getUsersName();
                         },
                       ),
                     );
@@ -163,25 +178,20 @@ class _FashionPageState extends State<FashionPage> {
                   ),
                   itemBuilder: (context, index) {
                     final hobbyImg = hobbysImg[index];
-                    return InkWell(
-                      child: Container(
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Column(
-                            children: [
-                              Text(
-                                hobbyImg.title ?? 'タイトルなし',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              if (hobbyImg.imgURL != null)
-                                Expanded(
-                                    child: Image.network(hobbyImg.imgURL!)),
-                            ],
+                    return AspectRatio(
+                      aspectRatio: 1,
+                      child: Column(
+                        children: [
+                          Text(
+                            hobbyImg.title ?? 'タイトルなし',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                          if (hobbyImg.imgURL != null)
+                            Expanded(child: Image.network(hobbyImg.imgURL!)),
+                        ],
                       ),
                     );
                   },
