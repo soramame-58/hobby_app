@@ -3,13 +3,19 @@ import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';
+import 'package:hobby/random_img.dart';
 import 'package:hobby/user.dart';
 import 'package:provider/provider.dart';
 
 class shufflePage extends StatefulWidget {
-  //
-  final UserDate userDate;
-  const shufflePage({Key? key, required this.userDate}) : super(key: key);
+  //UserData型のuserDataを宣言する
+  final UserData userData;
+  final RandomImg randomImg;
+
+  //初期化のためにkeyとuserDateをコンストラクタで渡す
+  //thisとすることで宣言したuserDataを指す
+  const shufflePage({Key? key, required this.userData, required this.randomImg})
+      : super(key: key);
   @override
   shufflePageState createState() => shufflePageState();
 }
@@ -105,7 +111,7 @@ class shufflePageState extends State<shufflePage> {
                     return SizedBox(
                       width: 90,
                       child: Text(
-                        widget.userDate.name!,
+                        widget.userData.name!,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     );
@@ -131,12 +137,16 @@ class shufflePageState extends State<shufflePage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
-                          final userDate = await model.getRandomUser();
+                          //押した時に最初にユーザーランダムして欲しいから一番に書く
+                          final userData = await model.getRandomUser();
+                          final randomImg = await model.getRandomHobby();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => shufflePage(
-                                  userDate: userDate,
+                                  //上記でrequiredとしているため,ここに引数を追記する必要がある
+                                  userData: userData,
+                                  randomImg: randomImg,
                                 ),
                               ));
                         },

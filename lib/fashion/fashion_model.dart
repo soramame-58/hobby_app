@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobby/chat/chat.dart';
+import 'package:hobby/random_img.dart';
 import 'package:hobby/user.dart';
 
 import 'hobby.dart';
@@ -39,7 +40,23 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<UserDate> getRandomUser() async {
+  Future<RandomImg> getRandomHobby() async {
+    final QuerySnapshot result = //QuerySnapshotをとってくる
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc()
+            .collection('hobby')
+            .get();
+    //スナップショットに含まれるすべてのドキュメントのhobbyを取得しリストに格納
+    final List<DocumentSnapshot> documents = result.docs;
+    Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
+    final String id = documents.first.id;
+    final String? title = data['title'];
+    final String? imgURL = data['imgURL'];
+    return RandomImg(id, title, imgURL);
+  }
+
+  Future<UserData> getRandomUser() async {
     final QuerySnapshot result = //QuerySnapshotをとってくる
         await FirebaseFirestore.instance.collection('users').get();
     //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
@@ -47,18 +64,18 @@ class FashionModel extends ChangeNotifier {
 
     //それをシャッフル
     documents.shuffle();
-    //シャッフルした中の一つのデータをしとくする
+    //シャッフルした中の一つのデータを取得する
     Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
     final String id = documents.first.id;
     final String? name = data['name'];
-    return UserDate(id, name);
+    //UserDataに取得したidとnameを追加
+    return UserData(id, name);
   }
 
   void getHobbySubCollection() async {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc()
         .collection('hobby')
         .get();
 
