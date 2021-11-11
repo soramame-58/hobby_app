@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobby/chat/chat.dart';
-import 'package:hobby/random_img.dart';
 import 'package:hobby/user.dart';
 
 import 'hobby.dart';
@@ -12,6 +11,7 @@ class FashionModel extends ChangeNotifier {
   String? name;
   List<Hobby>? hobbys;
   List<HobbyImg>? hobbyImg;
+  List<HobbyImg>? hobbysImg;
   List<Chat>? chats;
 
   void fetchFashionList() async {
@@ -40,24 +40,8 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<RandomImg> getRandomHobby() async {
-    final QuerySnapshot result = //QuerySnapshotをとってくる
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc()
-            .collection('hobby')
-            .get();
-    //スナップショットに含まれるすべてのドキュメントのhobbyを取得しリストに格納
-    final List<DocumentSnapshot> documents = result.docs;
-    Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
-    final String id = documents.first.id;
-    final String? title = data['title'];
-    final String? imgURL = data['imgURL'];
-    return RandomImg(id, title, imgURL);
-  }
-
   Future<UserData> getRandomUser() async {
-    final QuerySnapshot result = //QuerySnapshotをとってくる
+    final result = //QuerySnapshotをとってくる
         await FirebaseFirestore.instance.collection('users').get();
     //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
     final List<DocumentSnapshot> documents = result.docs;
@@ -73,9 +57,10 @@ class FashionModel extends ChangeNotifier {
   }
 
   void getHobbySubCollection() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc()
+        .doc(uid)
         .collection('hobby')
         .get();
 
@@ -89,6 +74,28 @@ class FashionModel extends ChangeNotifier {
     }).toList();
 
     this.hobbyImg = hobbyImg;
+
+    notifyListeners();
+  }
+
+  //shufflePageのuserDataを受け取っている
+  void getHobbyRandomSubCollection(UserData userData) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userData.id)
+        .collection('hobby')
+        .get();
+
+    final List<HobbyImg> hobbysImg =
+        snapshot.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      final String id = document.id;
+      final String? title = data['title'];
+      final String? imgURL = data['imgURL'];
+      return HobbyImg(id, imgURL, title);
+    }).toList();
+
+    this.hobbysImg = hobbysImg;
 
     notifyListeners();
   }

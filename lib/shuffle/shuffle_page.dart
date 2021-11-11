@@ -3,19 +3,16 @@ import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';
-import 'package:hobby/random_img.dart';
 import 'package:hobby/user.dart';
 import 'package:provider/provider.dart';
 
 class shufflePage extends StatefulWidget {
   //UserData型のuserDataを宣言する
   final UserData userData;
-  final RandomImg randomImg;
 
   //初期化のためにkeyとuserDateをコンストラクタで渡す
   //thisとすることで宣言したuserDataを指す
-  const shufflePage({Key? key, required this.userData, required this.randomImg})
-      : super(key: key);
+  const shufflePage({Key? key, required this.userData}) : super(key: key);
   @override
   shufflePageState createState() => shufflePageState();
 }
@@ -30,7 +27,8 @@ class shufflePageState extends State<shufflePage> {
       create: (_) => FashionModel()
         ..fetchFashionList()
         ..fetchName()
-        ..getHobbySubCollection()
+        //fashionPageの画面遷移時にuserDataを渡しているからstatefulの場合は、widget.userDataでidを取得できる
+        ..getHobbyRandomSubCollection(widget.userData)
         ..getChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
@@ -139,14 +137,11 @@ class shufflePageState extends State<shufflePage> {
                         onPressed: () async {
                           //押した時に最初にユーザーランダムして欲しいから一番に書く
                           final userData = await model.getRandomUser();
-                          final randomImg = await model.getRandomHobby();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => shufflePage(
-                                  //上記でrequiredとしているため,ここに引数を追記する必要がある
                                   userData: userData,
-                                  randomImg: randomImg,
                                 ),
                               ));
                         },
@@ -158,13 +153,11 @@ class shufflePageState extends State<shufflePage> {
             ),
             Expanded(
               child: Consumer<FashionModel>(builder: (context, model, child) {
-                final List<HobbyImg>? hobbysImg = model.hobbyImg;
+                final List<HobbyImg>? hobbysImg = model.hobbysImg;
 
                 if (hobbysImg == null) {
                   return SizedBox(
                     child: CircularProgressIndicator(),
-                    height: 10.0,
-                    width: 10.0,
                   );
                 }
 
@@ -172,6 +165,8 @@ class shufflePageState extends State<shufflePage> {
                   itemCount: hobbysImg.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
                   itemBuilder: (context, index) {
                     final hobbyImg = hobbysImg[index];

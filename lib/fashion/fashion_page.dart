@@ -145,13 +145,13 @@ class _FashionPageState extends State<FashionPage> {
                         tooltip: '次のページ',
                         onPressed: () async {
                           final userData = await model.getRandomUser();
-                          final randomImg = await model.getRandomHobby();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => shufflePage(
+                                  //shufflePageにuserDataを渡している
+                                  //そのuserDataとは、getRandomUserで取得したデータのこと
                                   userData: userData,
-                                  randomImg: randomImg,
                                 ),
                               ));
                         },
@@ -168,8 +168,6 @@ class _FashionPageState extends State<FashionPage> {
                 if (hobbysImg == null) {
                   return SizedBox(
                     child: CircularProgressIndicator(),
-                    height: 10.0,
-                    width: 10.0,
                   );
                 }
 
@@ -177,6 +175,8 @@ class _FashionPageState extends State<FashionPage> {
                   itemCount: hobbysImg.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
                   itemBuilder: (context, index) {
                     final hobbyImg = hobbysImg[index];
