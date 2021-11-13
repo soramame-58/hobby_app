@@ -8,11 +8,10 @@ import 'package:provider/provider.dart';
 
 class shufflePage extends StatefulWidget {
   //UserData型のuserDataを宣言する
-  final UserData userData;
-
+  final List<UserData> randomList;
   //初期化のためにkeyとuserDateをコンストラクタで渡す
   //thisとすることで宣言したuserDataを指す
-  const shufflePage({Key? key, required this.userData}) : super(key: key);
+  const shufflePage({Key? key, required this.randomList}) : super(key: key);
   @override
   shufflePageState createState() => shufflePageState();
 }
@@ -28,7 +27,7 @@ class shufflePageState extends State<shufflePage> {
         ..fetchFashionList()
         ..fetchName()
         //fashionPageの画面遷移時にuserDataを渡しているからstatefulの場合は、widget.userDataでidを取得できる
-        ..getHobbyRandomSubCollection(widget.userData)
+        ..getHobbyRandomSubCollection(widget.randomList.first)
         ..getChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
@@ -109,7 +108,7 @@ class shufflePageState extends State<shufflePage> {
                     return SizedBox(
                       width: 90,
                       child: Text(
-                        widget.userData.name!,
+                        widget.randomList.first.name!,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     );
@@ -135,13 +134,12 @@ class shufflePageState extends State<shufflePage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
-                          //押した時に最初にユーザーランダムして欲しいから一番に書く
-                          final userData = await model.getRandomUser();
+                          widget.randomList.removeAt(0);
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => shufflePage(
-                                  userData: userData,
+                                  randomList: widget.randomList,
                                 ),
                               ));
                         },

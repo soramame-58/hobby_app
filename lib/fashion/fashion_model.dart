@@ -13,6 +13,7 @@ class FashionModel extends ChangeNotifier {
   List<HobbyImg>? hobbyImg;
   List<HobbyImg>? hobbysImg;
   List<Chat>? chats;
+  List<UserData> randomList = [];
 
   void fetchFashionList() async {
     final QuerySnapshot snapshot =
@@ -40,7 +41,7 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<UserData> getRandomUser() async {
+  Future<void> RandomHobbyList() async {
     final result = //QuerySnapshotをとってくる
         await FirebaseFirestore.instance.collection('users').get();
     //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
@@ -49,11 +50,17 @@ class FashionModel extends ChangeNotifier {
     //それをシャッフル
     documents.shuffle();
     //シャッフルした中の一つのデータを取得する
-    Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
-    final String id = documents.first.id;
-    final String? name = data['name'];
-    //UserDataに取得したidとnameを追加
-    return UserData(id, name);
+
+    final List<UserData> randomList =
+        result.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      final String id = document.id;
+      final String? name = data['name'];
+      return UserData(id, name);
+    }).toList();
+
+    this.randomList = randomList;
+    notifyListeners();
   }
 
   void getHobbySubCollection() async {
@@ -206,4 +213,21 @@ class FashionModel extends ChangeNotifier {
       },
     );
   }
+}
+
+Future<UserData> getRandomUser() async {
+  final result = //QuerySnapshotをとってくる
+      await FirebaseFirestore.instance.collection('users').get();
+  //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
+  final List<DocumentSnapshot> documents = result.docs;
+
+  //それをシャッフル
+  documents.shuffle();
+  //シャッフルした中の一つのデータを取得する
+
+  Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
+  final String id = documents.first.id;
+  final String? name = data['name'];
+  //UserDataに取得したidとnameを追加
+  return UserData(id, name);
 }

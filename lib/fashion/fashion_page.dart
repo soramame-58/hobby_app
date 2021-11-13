@@ -144,14 +144,12 @@ class _FashionPageState extends State<FashionPage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
-                          final userData = await model.getRandomUser();
+                          await model.RandomHobbyList();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => shufflePage(
-                                  //shufflePageにuserDataを渡している
-                                  //そのuserDataとは、getRandomUserで取得したデータのこと
-                                  userData: userData,
+                                  randomList: model.randomList,
                                 ),
                               ));
                         },
