@@ -3,14 +3,12 @@ import 'package:hobby/camera/camera_page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';
+import 'package:hobby/home/home_page.dart';
 import 'package:hobby/user.dart';
 import 'package:provider/provider.dart';
 
 class shufflePage extends StatefulWidget {
-  //UserData型のuserDataを宣言する
   final List<UserData> randomList;
-  //初期化のためにkeyとuserDateをコンストラクタで渡す
-  //thisとすることで宣言したuserDataを指す
   const shufflePage({Key? key, required this.randomList}) : super(key: key);
   @override
   shufflePageState createState() => shufflePageState();
@@ -26,7 +24,6 @@ class shufflePageState extends State<shufflePage> {
       create: (_) => FashionModel()
         ..fetchFashionList()
         ..fetchName()
-        //fashionPageの画面遷移時にuserDataを渡しているからstatefulの場合は、widget.userDataでidを取得できる
         ..getHobbyRandomSubCollection(widget.randomList.first)
         ..getChatSubCollection(),
       child: Scaffold(
@@ -134,7 +131,10 @@ class shufflePageState extends State<shufflePage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
-                          widget.randomList.removeAt(0);
+                          if (widget.randomList.isEmpty) {
+                            print('hoge');
+                          }
+                          await widget.randomList.removeAt(0);
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -196,6 +196,44 @@ class shufflePageState extends State<shufflePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Future shuffle_showDialog(
+    BuildContext context,
+    String title,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("最後までお疲れ様です"),
+          content: Text("少し休憩しましょう"),
+          actions: <Widget>[
+            // ボタン領域
+            TextButton(
+              child: Text(
+                "前の人",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text(
+                "ホームへ",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

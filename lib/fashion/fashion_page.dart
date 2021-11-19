@@ -87,7 +87,7 @@ class _FashionPageState extends State<FashionPage> {
                             _selections[index] = !_selections[index];
                             if (_selections[index]) {
                               model.favorite_showDialog(
-                                  context, '魅力的な人に追加しました');
+                                  context, 'お気に入りの投稿に追加しました');
                             }
                           } else if (index == 1) {
                             _selections[index] = !_selections[index];

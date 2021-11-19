@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobby/chat/chat.dart';
+import 'package:hobby/home/home_page.dart';
 import 'package:hobby/user.dart';
 
 import 'hobby.dart';
@@ -14,6 +15,7 @@ class FashionModel extends ChangeNotifier {
   List<HobbyImg>? hobbysImg;
   List<Chat>? chats;
   List<UserData> randomList = [];
+  var set = <int>{};
 
   void fetchFashionList() async {
     final QuerySnapshot snapshot =
@@ -63,28 +65,6 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getHobbySubCollection() async {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-    final snapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('hobby')
-        .get();
-
-    final List<HobbyImg> hobbyImg =
-        snapshot.docs.map((DocumentSnapshot document) {
-      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-      final String id = document.id;
-      final String? title = data['title'];
-      final String? imgURL = data['imgURL'];
-      return HobbyImg(id, imgURL, title);
-    }).toList();
-
-    this.hobbyImg = hobbyImg;
-
-    notifyListeners();
-  }
-
   //shufflePageのuserDataを受け取っている
   void getHobbyRandomSubCollection(UserData userData) async {
     final snapshot = await FirebaseFirestore.instance
@@ -103,6 +83,28 @@ class FashionModel extends ChangeNotifier {
     }).toList();
 
     this.hobbysImg = hobbysImg;
+
+    notifyListeners();
+  }
+
+  void getHobbySubCollection() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('hobby')
+        .get();
+
+    final List<HobbyImg> hobbyImg =
+        snapshot.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      final String id = document.id;
+      final String? title = data['title'];
+      final String? imgURL = data['imgURL'];
+      return HobbyImg(id, imgURL, title);
+    }).toList();
+
+    this.hobbyImg = hobbyImg;
 
     notifyListeners();
   }
@@ -213,21 +215,42 @@ class FashionModel extends ChangeNotifier {
       },
     );
   }
-}
 
-Future<UserData> getRandomUser() async {
-  final result = //QuerySnapshotをとってくる
-      await FirebaseFirestore.instance.collection('users').get();
-  //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
-  final List<DocumentSnapshot> documents = result.docs;
-
-  //それをシャッフル
-  documents.shuffle();
-  //シャッフルした中の一つのデータを取得する
-
-  Map<String, dynamic> data = documents.first.data() as Map<String, dynamic>;
-  final String id = documents.first.id;
-  final String? name = data['name'];
-  //UserDataに取得したidとnameを追加
-  return UserData(id, name);
+  Future shuffle_showDialog(
+    BuildContext context,
+    String title,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("最後までお疲れ様です"),
+          content: Text("少し休憩しましょう"),
+          actions: <Widget>[
+            // ボタン領域
+            TextButton(
+              child: Text(
+                "前の人",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text(
+                "ホームへ",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

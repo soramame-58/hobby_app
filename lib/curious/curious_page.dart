@@ -25,7 +25,7 @@ class CuriousPage extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          '気になった投稿',
+          '魅力的な人たち',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -43,7 +43,7 @@ class CuriousPage extends StatelessWidget {
                 leading: const Icon(Icons.face_outlined),
                 title: Text('$index'),
                 subtitle: Text(''),
-                onTap: () {},
+                onTap: () {/* react to the tile being tapped */},
               ));
         },
         itemCount: listItem.length,
