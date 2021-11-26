@@ -21,10 +21,10 @@ class _FashionPageState extends State<FashionPage> {
     //ChangeNotifierProviderは、変更された時にその変更を検知できる。
     return ChangeNotifierProvider<FashionModel>(
       create: (_) => FashionModel()
-        ..fetchFashionList()
+        ..fetchList()
         ..fetchName()
-        ..getHobbySubCollection()
-        ..getChatSubCollection(),
+        ..UidHobbySubCollection()
+        ..ChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -49,7 +49,7 @@ class _FashionPageState extends State<FashionPage> {
                       MaterialPageRoute(
                         builder: (context) => CameraPage(),
                       ));
-                  model.fetchFashionList();
+                  model.fetchList();
                 },
               );
             }),
@@ -144,7 +144,7 @@ class _FashionPageState extends State<FashionPage> {
                         icon: Icon(Icons.arrow_forward),
                         tooltip: '次のページ',
                         onPressed: () async {
-                          await model.RandomHobbyList();
+                          await model.RandomList();
                           await Navigator.push(
                               context,
                               MaterialPageRoute(

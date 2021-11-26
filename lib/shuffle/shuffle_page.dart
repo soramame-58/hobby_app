@@ -4,7 +4,7 @@ import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';
 import 'package:hobby/home/home_page.dart';
-import 'package:hobby/user.dart';
+import 'package:hobby/shuffle/user.dart';
 import 'package:provider/provider.dart';
 
 class shufflePage extends StatefulWidget {
@@ -22,10 +22,10 @@ class shufflePageState extends State<shufflePage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FashionModel>(
       create: (_) => FashionModel()
-        ..fetchFashionList()
+        ..fetchList()
         ..fetchName()
-        ..getHobbyRandomSubCollection(widget.randomList.first)
-        ..getChatSubCollection(),
+        ..getHobbySubCollection(widget.randomList.first)
+        ..ChatSubCollection(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -50,7 +50,7 @@ class shufflePageState extends State<shufflePage> {
                       MaterialPageRoute(
                         builder: (context) => CameraPage(),
                       ));
-                  model.fetchFashionList();
+                  model.fetchList();
                 },
               );
             }),

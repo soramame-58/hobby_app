@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobby/chat/chat.dart';
-import 'package:hobby/home/home_page.dart';
-import 'package:hobby/user.dart';
+import 'package:hobby/shuffle/user.dart';
 
 import 'hobby.dart';
 import 'hobby_img.dart';
@@ -15,9 +14,8 @@ class FashionModel extends ChangeNotifier {
   List<HobbyImg>? hobbysImg;
   List<Chat>? chats;
   List<UserData> randomList = [];
-  var set = <int>{};
 
-  void fetchFashionList() async {
+  void fetchList() async {
     final QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('hobby').get();
 
@@ -43,7 +41,7 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> RandomHobbyList() async {
+  Future<void> RandomList() async {
     final result = //QuerySnapshotをとってくる
         await FirebaseFirestore.instance.collection('users').get();
     //スナップショットに含まれるすべてのドキュメントを取得しリストに格納
@@ -66,7 +64,7 @@ class FashionModel extends ChangeNotifier {
   }
 
   //shufflePageのuserDataを受け取っている
-  void getHobbyRandomSubCollection(UserData userData) async {
+  void getHobbySubCollection(UserData userData) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(userData.id)
@@ -87,7 +85,7 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getHobbySubCollection() async {
+  void UidHobbySubCollection() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -109,7 +107,7 @@ class FashionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getChatSubCollection() async {
+  void ChatSubCollection() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -209,44 +207,6 @@ class FashionModel extends ChangeNotifier {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future shuffle_showDialog(
-    BuildContext context,
-    String title,
-  ) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("最後までお疲れ様です"),
-          content: Text("少し休憩しましょう"),
-          actions: <Widget>[
-            // ボタン領域
-            TextButton(
-              child: Text(
-                "前の人",
-                style: TextStyle(color: Colors.black),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text(
-                "ホームへ",
-                style: TextStyle(color: Colors.black),
-              ),
-              onPressed: () async {
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ));
-              },
             ),
           ],
         );
