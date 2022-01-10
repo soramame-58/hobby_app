@@ -7,7 +7,7 @@ import 'package:hobby/myprofile/myprofile_page.dart';
 import 'package:hobby/shuffle/shuffle_page.dart';
 import 'package:provider/provider.dart';
 
-//画像投稿やチャット、投稿写真の表示場所 UI完成
+//画像投稿やチャット、お気に入りアイコン、投稿写真の表示場所 UI完成
 class FashionPage extends StatefulWidget {
   @override
   State<FashionPage> createState() => _FashionPageState();
