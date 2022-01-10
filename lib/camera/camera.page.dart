@@ -3,6 +3,7 @@ import 'package:hobby/camera/camera_model.dart';
 import 'package:hobby/fashion/fashion_page.dart';
 import 'package:provider/provider.dart';
 
+//カメラ機能
 class CameraPage extends StatelessWidget {
   final titleController = TextEditingController();
   @override
