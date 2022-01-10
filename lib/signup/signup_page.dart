@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hobby/signup/signup_model.dart';
 import 'package:provider/provider.dart';
 
+//サインアップ
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
