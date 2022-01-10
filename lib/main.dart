@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'home/home_page.dart';
 import 'setting/setting_page.dart';
 
-bool isEmpty(String string) => string.length == 0;
+//ホームと設定をボトムナビゲーションバーで分けている
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
