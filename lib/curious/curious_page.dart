@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//お気に入り機能
 class CuriousPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
