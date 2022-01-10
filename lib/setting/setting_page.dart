@@ -6,6 +6,7 @@ import 'package:hobby/myprofile/myprofile_model.dart';
 import 'package:hobby/myprofile/myprofile_page.dart';
 import 'package:provider/provider.dart';
 
+//設定UI
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
