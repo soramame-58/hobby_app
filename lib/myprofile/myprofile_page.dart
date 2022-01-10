@@ -3,6 +3,7 @@ import 'package:hobby/editprofile/editprofile_page.dart';
 import 'package:hobby/myprofile/myprofile_model.dart';
 import 'package:provider/provider.dart';
 
+//自己紹介画面
 class MyPage extends StatelessWidget {
   List<String> imageUrl = [
     'http://livedoor.blogimg.jp/gyu2/imgs/f/4/f4f2f802.jpg',
