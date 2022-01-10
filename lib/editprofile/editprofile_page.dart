@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hobby/editprofile/editprofile_model.dart';
 import 'package:provider/provider.dart';
 
+//自己紹介画面の編集
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
