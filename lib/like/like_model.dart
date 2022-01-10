@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+//firebaseにいいねをした、されたユーザーの保存
 class likeModel extends ChangeNotifier {
   String stringId = '';
   String name = '';
