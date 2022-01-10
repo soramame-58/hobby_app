@@ -14,6 +14,9 @@ class FashionModel extends ChangeNotifier {
   List<HobbyImg>? hobbysImg;
   List<Chat>? chats;
   List<UserData> randomList = [];
+  String? userId;
+  String? postId;
+  String? username;
 
   void fetchList() async {
     final QuerySnapshot snapshot =
@@ -126,6 +129,35 @@ class FashionModel extends ChangeNotifier {
     this.chats = chats;
 
     notifyListeners();
+  }
+
+  // いいねをつけたユーザーのID
+  Future likedUser() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection('hobby')
+        .doc(userId)
+        .collection('likedUser')
+        .add({
+      'id': userId, // いいねをつけたユーザーのID(liked_user_idと一致)
+      'createdAt': Timestamp.now(),
+      'name': name, // ユーザー名
+    });
+  }
+
+  // 自分がいいねをつけた投稿のID
+  Future likedPost() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("likedPost")
+        .add({
+      'id': postId, // いいねをつけたユーザーのID(liked_post_idと一致)
+      'createdAt': Timestamp.now(),
+    });
   }
 
   Future delete(Hobby hobby) {

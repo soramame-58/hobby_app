@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/camera/camera_page.dart';
+import 'package:hobby/camera/camera.page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';

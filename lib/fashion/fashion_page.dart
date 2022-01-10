@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/camera/camera_page.dart';
+import 'package:hobby/camera/camera.page.dart';
 import 'package:hobby/chat/chat_page.dart';
 import 'package:hobby/fashion/fashion_model.dart';
 import 'package:hobby/fashion/hobby_img.dart';
@@ -24,7 +24,9 @@ class _FashionPageState extends State<FashionPage> {
         ..fetchList()
         ..fetchName()
         ..UidHobbySubCollection()
-        ..ChatSubCollection(),
+        ..ChatSubCollection()
+        ..likedUser()
+        ..likedPost(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(

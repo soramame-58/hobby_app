@@ -6,6 +6,7 @@ class SignUpModel extends ChangeNotifier {
   String mail = '';
   String password = '';
   String name = '';
+  int number = 0;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   Future signUp() async {
@@ -28,10 +29,14 @@ class SignUpModel extends ChangeNotifier {
         .user;
     final uid = user!.uid;
 
+    String id = FirebaseFirestore.instance.collection('users').doc(uid).id;
+
     FirebaseFirestore.instance.collection('users').doc(uid).set({
       'email': mail,
       'createdAt': Timestamp.now(),
       'name': name,
+      'likePostCount': number,
+      'id': id,
     });
   }
 }

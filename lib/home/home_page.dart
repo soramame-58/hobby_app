@@ -1,20 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hobby/cook/cook_page.dart';
-import 'package:hobby/cosume/cosmetics_page.dart';
 import 'package:hobby/login/login_page.dart';
 import 'package:hobby/myprofile/myprofile_page.dart';
 import 'package:hobby/signup/signup_page.dart';
-import '../bike/bike_page.dart';
-import '../book/book_page.dart';
-import '../car/car_page.dart';
 import '../fashion/fashion_page.dart';
-import '../game/game_page.dart';
-import '../hotel/hotel_page.dart';
-import '../movie/movie_page.dart';
-import '../music/music_page.dart';
-import '../outdoor/outdoor_page.dart';
-import '../spa/spa_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -115,83 +104,6 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FashionPage(),
-                      ));
-                }
-                if (index == 1) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CosmeticsPage(),
-                      ));
-                }
-                if (index == 2) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CookPage(),
-                      ));
-                }
-                if (index == 3) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BikePage(),
-                      ));
-                }
-                if (index == 4) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CarPage(),
-                      ));
-                }
-                if (index == 5) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SpaPage(),
-                      ));
-                }
-                if (index == 6) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookPage(),
-                      ));
-                }
-                if (index == 7) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MoviePage(),
-                      ));
-                }
-                if (index == 8) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MusicPage(),
-                      ));
-                }
-                if (index == 9) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => GamePage(),
-                      ));
-                }
-                if (index == 10) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OutdoorPage(),
-                      ));
-                }
-                if (index == 11) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HotelPage(),
                       ));
                 }
               },
