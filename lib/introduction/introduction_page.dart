@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hobby/introduction/introduction_model.dart';
 import 'package:provider/provider.dart';
 
+//ご紹介機能
 class IntroductionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
