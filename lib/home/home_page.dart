@@ -5,6 +5,7 @@ import 'package:hobby/myprofile/myprofile_page.dart';
 import 'package:hobby/signup/signup_page.dart';
 import '../fashion/fashion_page.dart';
 
+//アプリのメインUI
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
