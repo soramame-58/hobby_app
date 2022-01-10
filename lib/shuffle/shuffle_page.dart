@@ -7,6 +7,7 @@ import 'package:hobby/home/home_page.dart';
 import 'package:hobby/shuffle/user.dart';
 import 'package:provider/provider.dart';
 
+//ユーザーのランダムシャッフル機能
 class shufflePage extends StatefulWidget {
   final List<UserData> randomList;
   const shufflePage({Key? key, required this.randomList}) : super(key: key);
