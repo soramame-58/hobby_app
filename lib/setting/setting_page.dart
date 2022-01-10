@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hobby/attractive/attractive_page.dart';
 import 'package:hobby/curious/curious_page.dart';
 import 'package:hobby/form/form_page.dart';
 import 'package:hobby/introduction/introduction_page.dart';
@@ -38,13 +37,6 @@ class SettingPage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.wc),
               title: Text("魅力的な人達"),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AttractivePage(),
-                    ));
-              },
             ),
             ListTile(
               leading: Icon(Icons.favorite),
