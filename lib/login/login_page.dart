@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'login_model.dart';
 
+//ログイン機能
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
